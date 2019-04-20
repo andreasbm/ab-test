@@ -1,5 +1,5 @@
-import { getExperiment } from "./experiment";
-import { IExperiment, TestValue, Variations } from "./typings";
+import { getExperiment } from "../experiment/experiment";
+import { IExperiment, TestValue, Variations } from "../typings";
 
 /**
  * Selects a random variation and registers the test.

@@ -9,6 +9,10 @@
 	background: color("primary", $light-hue, 0.2);
 }
 
+.divider {
+	margin: $spacing-m 0;
+}
+
 #info, #text {
 	max-width: size(700);
 	margin-left: auto;

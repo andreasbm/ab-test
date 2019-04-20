@@ -3,14 +3,17 @@ import { repeat } from "lit-html/directives/repeat";
 import "weightless/button";
 import "weightless/text";
 import "weightless/title";
+import "weightless/divider";
 import { setColor } from "weightless/util/theme";
-import { abTest } from "../../../lib/ab-test";
-import { getExperiment, setExperiment } from "../../../lib/experiment";
-import { GoogleTagManagerExperiment } from "../../../lib/google-tag-manager-experiment";
+import { abElement } from "../../../lib/ab-element/ab-element";
+import { abTest } from "../../../lib/ab-test/ab-test";
+import { getExperiment } from "../../../lib/experiment/experiment";
 import { Tests } from "../../../lib/typings";
 import css from "./home-element.scss";
 
-setExperiment(new GoogleTagManagerExperiment("tests"));
+/*
+	ab-funnel
+ */
 
 @customElement("home-element")
 export default class HomeElement extends LitElement {
@@ -33,9 +36,7 @@ export default class HomeElement extends LitElement {
 		/**
 		 * Save the tests each time they are updated.
 		 */
-		getExperiment().addEventListener("set", (e: CustomEvent<Tests>) => {
-			console.log("> Update the analytics tools");
-			console.log(e.detail);
+		getExperiment().addEventListener("update", (e: CustomEvent<Tests>) => {
 			this.requestUpdate().then();
 		});
 	}
@@ -50,7 +51,7 @@ export default class HomeElement extends LitElement {
 		setColor("primary", "hue", hue);
 
 		// Get random cta
-		this.cta = abTest("cta", ["github", "npm"]);
+		this.cta = abTest<"github" | "npm">("cta", ["github", "npm"]);
 	}
 
 	/**
@@ -74,28 +75,38 @@ export default class HomeElement extends LitElement {
 		return html`
 			<header id="header">
 				<wl-title id="title">${abTest<string>("header.title.text", [
-					() => "A/B testing", "A/B testing made simple", "Everyone should A/B test"]
-				)}</wl-title>
+			() => "A/B testing", "A/B testing made simple", "Everyone should A/B test"]
+		)}</wl-title>
 				
 					<wl-text id="text" size="large">
 						${abTest("header.text.long", [true, false])
-			? `To make clever decisions about what your next incremental change should be, you need data. `
+			? `Never be happy with your conversion rate. Just remember that every page can be better. `
 			: undefined}This library makes A/B testing incredible ${abTest("header.text.simple-word", ["simple", "easy"])}!
 					</wl-text>
 				
 				<wl-button @click="${this.checkOut}">
 					${this.cta === "github"
-						? "Check out on Github"
-						: "Check out on NPM"
-					}
+			? "Check out on Github"
+			: "Check out on NPM"
+			}
 				</wl-button>
 			</header>
 			
+			
 			<div id="info">
+			
+				${abElement("element", ["element-one", "element-two"], {
+					headline: abTest("element.headline", ["These are the values", "Check out the values below"])
+				}, {
+					"element-one": () => import("../elements/element-one/element-one"),
+					"element-two": () => import("../elements/element-two/element-two")
+				})}
+				
+				<wl-divider class="divider"></wl-divider>
 				${repeat(Object.entries(getExperiment().getAll()), (([id, value]) => html`
 					<wl-text class="item"><b>${id}:</b> ${value}</wl-text>
 				`))}
-				<br />
+				<wl-divider class="divider"></wl-divider>
 				<wl-button @click="${this.clearTests}" inverted flat outlined>New A/B test</wl-button>
 			</div>
 			

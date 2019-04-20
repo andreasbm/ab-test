@@ -1,6 +1,10 @@
-import { IExperiment, Tests, TestValue, Variations } from "./typings";
-import { extractValue } from "./util/extract-value";
-import { randomItemFromList } from "./util/random";
+import { IExperiment, Tests, TestValue, Variations } from "../typings";
+import { extractValue } from "../util/extract-value";
+import { randomItemFromList } from "../util/random";
+
+export enum ExperimentEvent {
+	UPDATE = "update"
+}
 
 /**
  * An experiment is a collection of tests.
@@ -13,8 +17,8 @@ export class Experiment extends EventTarget implements IExperiment {
 	 */
 	constructor (protected storageKey: string = "tests") {
 		super();
-		this.addEventListener("set", this.saveTests.bind(this));
-		this.loadTests();
+		this.addEventListener(ExperimentEvent.UPDATE, this.save.bind(this));
+		this.load();
 	}
 
 	/**
@@ -24,7 +28,7 @@ export class Experiment extends EventTarget implements IExperiment {
 	 */
 	set (id: string, value: TestValue) {
 		this.tests[id] = value;
-		this.dispatchSetEvent();
+		this.didUpdate();
 	}
 
 	/**
@@ -59,7 +63,7 @@ export class Experiment extends EventTarget implements IExperiment {
 			delete this.tests[id];
 		}
 
-		this.dispatchSetEvent();
+		this.didUpdate();
 	}
 
 	/**
@@ -67,7 +71,7 @@ export class Experiment extends EventTarget implements IExperiment {
 	 */
 	removeAll () {
 		this.tests = {};
-		this.dispatchSetEvent();
+		this.didUpdate();
 	}
 
 	/**
@@ -79,36 +83,35 @@ export class Experiment extends EventTarget implements IExperiment {
 			this.tests[id] = value;
 		}
 
-		this.dispatchSetEvent();
+		this.didUpdate();
 	}
 
 	/**
 	 * Returns a random variation.
 	 * @param variations
 	 */
-	getVariation <T>(variations: Variations<T>): T {
+	getVariation<T> (variations: Variations<T>): T {
 		return extractValue(randomItemFromList(extractValue(variations, this))!, this);
 	}
 
 	/**
-	 * Dispatches the set event.
+	 * Dispatches an update event.
 	 */
-	protected dispatchSetEvent () {
-		this.dispatchEvent(new CustomEvent("set", {detail: this.getAll()}));
+	protected didUpdate () {
+		this.dispatchEvent(new CustomEvent(ExperimentEvent.UPDATE, {detail: this.getAll()}));
 	}
-
 
 	/**
 	 * Saves tests to local storage.
 	 */
-	protected saveTests () {
+	protected save () {
 		localStorage.setItem(this.storageKey, JSON.stringify(this.tests));
 	}
 
 	/**
 	 * Loads tests from local storage.
 	 */
-	protected loadTests () {
+	protected load () {
 		const currentTests = JSON.parse(localStorage.getItem(this.storageKey) || "{}");
 		this.setAll(currentTests);
 	}

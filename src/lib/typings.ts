@@ -1,8 +1,11 @@
 export type ExtractableValue<T> = T | ((experiment: IExperiment) => T);
 export type Variation<T> = ExtractableValue<T>;
 export type Variations<T> = ExtractableValue<Variation<T>[]>
-export type TestValue = string | number | boolean;
+export type TestValue = unknown;
 export type Tests = {[id: string]: TestValue};
+
+export type Properties = {[key: string]: unknown;};
+export type ElementImporter = (() => Promise<unknown>);
 
 export interface IExperiment extends EventTarget {
 	has (id: string): boolean;
