@@ -1,20 +1,15 @@
-export type ExtractableValue<T> = T | ((experiment: IExperiment) => T);
-export type Variation<T> = ExtractableValue<T>;
-export type Variations<T> = ExtractableValue<Variation<T>[]>
-export type TestValue = unknown;
-export type Tests = {[id: string]: TestValue};
-
+export type Tests = {[id: string]: unknown};
 export type Properties = {[key: string]: unknown;};
 export type ElementImporter = (() => Promise<unknown>);
 
 export interface IExperiment extends EventTarget {
 	has (id: string): boolean;
-	set (id: string, value: TestValue): void;
+	set<T> (id: string, value: T): void;
 	setAll (tests: Tests): void;
-	get (id: string): TestValue | undefined;
+	get<T> (id: string): T | undefined;
 	getAll (): Tests;
 	remove (id: string): void;
 	removeAll (): void;
-	getVariation<T> (variations: Variations<T>): T
+	getVariation<T> (variations: T[]): T;
 }
 

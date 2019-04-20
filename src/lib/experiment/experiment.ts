@@ -1,5 +1,4 @@
-import { IExperiment, Tests, TestValue, Variations } from "../typings";
-import { extractValue } from "../util/extract-value";
+import { IExperiment, Tests } from "../typings";
 import { randomItemFromList } from "../util/random";
 
 export enum ExperimentEvent {
@@ -26,7 +25,7 @@ export class Experiment extends EventTarget implements IExperiment {
 	 * @param id
 	 * @param value
 	 */
-	set (id: string, value: TestValue) {
+	set<T> (id: string, value: T) {
 		this.tests[id] = value;
 		this.didUpdate();
 	}
@@ -43,8 +42,8 @@ export class Experiment extends EventTarget implements IExperiment {
 	 * Returns a test with a given id.
 	 * @param id
 	 */
-	get (id: string) {
-		return this.tests[id];
+	get<T> (id: string) {
+		return this.tests[id] as T;
 	}
 
 	/**
@@ -90,8 +89,8 @@ export class Experiment extends EventTarget implements IExperiment {
 	 * Returns a random variation.
 	 * @param variations
 	 */
-	getVariation<T> (variations: Variations<T>): T {
-		return extractValue(randomItemFromList(extractValue(variations, this))!, this);
+	getVariation<T> (variations: T[]): T {
+		return randomItemFromList(variations)!;
 	}
 
 	/**

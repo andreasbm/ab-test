@@ -1,5 +1,5 @@
 import { getExperiment } from "../experiment/experiment";
-import { IExperiment, TestValue, Variations } from "../typings";
+import { IExperiment } from "../typings";
 
 /**
  * Selects a random variation and registers the test.
@@ -7,9 +7,9 @@ import { IExperiment, TestValue, Variations } from "../typings";
  * @param variations
  * @param experiment
  */
-export const abTest = <T extends TestValue> (id: string,
-                                             variations: Variations<T>,
-                                             experiment: IExperiment = getExperiment()): T => {
+export const abTest = <T = unknown> (id: string,
+                                     variations: T[],
+                                     experiment: IExperiment = getExperiment()): T => {
 
 	// Check if we already have a value for this id.
 	if (experiment.has(id)) {

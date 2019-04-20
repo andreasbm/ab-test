@@ -1,6 +1,6 @@
 import { directive, NodePart, Part } from "lit-html";
 import { getExperiment } from "../experiment/experiment";
-import { ElementImporter, IExperiment, Properties, Variations } from "../typings";
+import { ElementImporter, IExperiment, Properties } from "../typings";
 import { setProperties } from "../util/set-properties";
 
 const partCache = new WeakMap<NodePart, HTMLElement>();
@@ -10,9 +10,8 @@ const partCache = new WeakMap<NodePart, HTMLElement>();
  */
 export const abElement = directive((
 	id: string,
-	elements: Variations<string>,
+	variations: {[tagName: string]: ElementImporter | null},
 	properties: Properties = {},
-	importMap: {[tagName: string]: ElementImporter} = {},
 	experiment: IExperiment = getExperiment()) => async (part: Part) => {
 
 	// Make sure the part is used within a text binding context.
@@ -36,16 +35,17 @@ export const abElement = directive((
 	}
 
 	// Either get the tag name from the experiment or pick a new variation.
-	const tagName = experiment.get(id) as string || experiment.getVariation(elements)!;
-	const importer = importMap[tagName];
+	const [tagName, importer] = experiment.has(id)
+		? [experiment.get(id), variations[experiment.get<string>(id) || ""]]
+		: experiment.getVariation(Object.entries(variations));
 
 	// Import the element if an importer was specified.
 	if (importer != null) {
-		await Promise.resolve(importer);
+		await Promise.resolve(importer());
 	}
 
 	// Create a new element, set the properties and add it to the DOM.
-	const $element = document.createElement(tagName as string);
+	const $element = document.createElement(tagName);
 	setProperties($element, properties);
 	partCache.set(part, $element);
 	experiment.set(id, tagName);

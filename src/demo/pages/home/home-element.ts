@@ -74,32 +74,32 @@ export default class HomeElement extends LitElement {
 	render () {
 		return html`
 			<header id="header">
-				<wl-title id="title">${abTest<string>("header.title.text", [
-			() => "A/B testing", "A/B testing made simple", "Everyone should A/B test"]
-		)}</wl-title>
+				<wl-title id="title">${abTest("header.title.text", [
+					"A/B testing", "A/B testing made simple", "Everyone should A/B test"
+				])}</wl-title>
 				
 					<wl-text id="text" size="large">
 						${abTest("header.text.long", [true, false])
-			? `Never be happy with your conversion rate. Just remember that every page can be better. `
-			: undefined}This library makes A/B testing incredible ${abTest("header.text.simple-word", ["simple", "easy"])}!
+							? `Never be happy with your conversion rate. Just remember that every page can be better. `
+							: undefined}
+						This library makes A/B testing incredible ${abTest("header.text.simple-word", ["simple", "easy"])}!
 					</wl-text>
 				
 				<wl-button @click="${this.checkOut}">
 					${this.cta === "github"
-			? "Check out on Github"
-			: "Check out on NPM"
-			}
+						? "Check out on Github"
+						: "Check out on NPM"
+					}
 				</wl-button>
 			</header>
 			
 			
 			<div id="info">
-			
-				${abElement("element", ["element-one", "element-two"], {
-					headline: abTest("element.headline", ["These are the values", "Check out the values below"])
-				}, {
+				${abElement("element", {
 					"element-one": () => import("../elements/element-one/element-one"),
 					"element-two": () => import("../elements/element-two/element-two")
+				}, {
+					headline: abTest("element.headline", ["These are the values", "Check out the values below"])
 				})}
 				
 				<wl-divider class="divider"></wl-divider>
