@@ -29,7 +29,6 @@
 		"s:dev": "rollup -c rollup.config.ts --watch --environment NODE_ENV:dev",
 		"s:prod": "rollup -c rollup.config.ts --watch --environment NODE_ENV:prod",
 		"s": "npm run s:dev",
-		"test": "karma start karma.conf.js",
 		"readme": "node_modules/.bin/readme generate",
 		"b:lib": "node pre-build.js && tsc -p tsconfig.build.json",
 		"postversion": "npm run readme && npm run b:lib",
