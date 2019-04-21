@@ -1,0 +1,8 @@
+{
+	"text": "Never be happy with your conversion rate. Just remember that every page can be better.",
+	"demo": "https://appnest-demo.firebaseapp.com/ab-test",
+	"ids": {
+		"npm": "@appnest/ab-test",
+		"github": "andreasbm/ab-test"
+	}
+}

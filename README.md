@@ -1,11 +1,28 @@
 <h1 align="center">@appnest/ab-test</h1>
 <p align="center">
   <b>A/B testing made simple</b></br>
-  <sub><sub>
+  <sub>Never be happy with your conversion rate. Just remember that every page can be better. Go here to see a demo <a href="https://appnest-demo.firebaseapp.com/ab-test">https://appnest-demo.firebaseapp.com/ab-test</a>.<sub>
 </p>
 
 <br />
 
+<p align="center">
+		<a href="https://npmcharts.com/compare/@appnest/ab-test?minimal=true"><img alt="Downloads per month" src="https://img.shields.io/npm/dm/@appnest/ab-test.svg" height="20"/></a>
+<a href="https://www.npmjs.com/package/@appnest/ab-test"><img alt="NPM Version" src="https://img.shields.io/npm/v/@appnest/ab-test.svg" height="20"/></a>
+<a href="https://david-dm.org/andreasbm/ab-test"><img alt="Dependencies" src="https://img.shields.io/david/andreasbm/ab-test.svg" height="20"/></a>
+<a href="https://github.com/andreasbm/ab-test/graphs/contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/andreasbm/ab-test.svg" height="20"/></a>
+	</p>
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#table-of-contents)
+
+## ➤ Table of Contents
+
+* [➤ Installation](#-installation)
+* [➤ Usage](#-usage)
+* [➤ A/B test web components using lit-html](#-ab-test-web-components-using-lit-html)
+* [➤ Contributors](#-contributors)
+* [➤ License](#-license)
 
 
 [![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#installation)
