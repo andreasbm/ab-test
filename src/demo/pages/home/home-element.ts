@@ -56,10 +56,10 @@ export default class HomeElement extends LitElement {
 	private checkOut () {
 		switch (this.cta) {
 			case "github":
-				alert("Open github");
+				location.href = `https://github.com/andreasbm/ab-test`;
 				break;
 			case "npm":
-				alert("Open NPM");
+				location.href = `https://www.npmjs.com/package/@appnest/ab-test`;
 				break;
 		}
 	}
@@ -89,7 +89,6 @@ export default class HomeElement extends LitElement {
 				</wl-button>
 			</header>
 			
-			
 			<div id="info">
 				${abElement("element", {
 					"element-one": () => import("../elements/element-one/element-one"),
@@ -103,7 +102,7 @@ export default class HomeElement extends LitElement {
 					<wl-text class="item"><b>${id}:</b> ${value}</wl-text>
 				`))}
 				<wl-divider class="divider"></wl-divider>
-				<wl-button @click="${this.clearTests}" inverted flat outlined>New A/B test</wl-button>
+				<wl-button id="clear-button" @click="${this.clearTests}" inverted flat outlined>New A/B test</wl-button>
 			</div>
 			
 		`;
