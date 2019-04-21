@@ -1,5 +1,5 @@
 {
-	"name": "blocks",
+	"name": "ab-test",
 	"scripts": {
 		"b:dev": "rollup -c rollup.config.ts --environment NODE_ENV:dev",
 		"b:prod": "rollup -c rollup.config.ts --environment NODE_ENV:prod",
