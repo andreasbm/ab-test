@@ -1,5 +1,5 @@
 {
-	"text": "Never be happy with your conversion rate. Just remember that every page can be better.",
+	"text": "Never be happy with your conversion rate. Just remember that every page can be better. This library makes A/B testing incredible simple and works very well with web components.",
 	"demo": "https://appnest-demo.firebaseapp.com/ab-test",
 	"ids": {
 		"npm": "@appnest/ab-test",

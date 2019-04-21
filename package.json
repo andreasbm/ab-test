@@ -1,7 +1,7 @@
 {
 	"name": "@appnest/ab-test",
 	"version": "0.0.0",
-	"description": "A/B testing made simple",
+	"description": "A/B testing made incredible simple",
 	"author": "Appnest",
 	"bugs": {
 		"url": "https://github.com/andreasbm/ab-test/issues"
@@ -18,7 +18,9 @@
 		"testing",
 		"split",
 		"analytics",
-		"lit"
+		"lit",
+		"web",
+		"components"
 	],
 	"license": "MIT",
 	"scripts": {
@@ -28,13 +30,19 @@
 		"s:prod": "rollup -c rollup.config.ts --watch --environment NODE_ENV:prod",
 		"s": "npm run s:dev",
 		"test": "karma start karma.conf.js",
-		"readme": "node_modules/.bin/readme generate"
+		"readme": "node_modules/.bin/readme generate",
+		"b:lib": "node pre-build.js && tsc -p tsconfig.build.json",
+		"postversion": "npm run readme && npm run b:lib",
+		"publish:patch": "np patch --contents=dist --no-cleanup",
+		"publish:minor": "np minor --contents=dist --no-cleanup",
+		"publish:major": "np major --contents=dist --no-cleanup"
 	},
 	"devDependencies": {
 		"@appnest/readme": "^1.2.3",
 		"@appnest/web-config": "^0.4.17",
 		"@appnest/web-router": "^1.3.4",
 		"lit-element": "^2.1.0",
+		"node-typescript-compiler": "^2.0.0",
 		"weightless": "0.0.29"
 	},
 	"dependencies": {

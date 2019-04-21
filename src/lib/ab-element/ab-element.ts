@@ -16,7 +16,7 @@ export const abElement = directive((
 
 	// Make sure the part is used within a text binding context.
 	if (!(part instanceof NodePart)) {
-		throw new Error(`abTestElement can only be used in text bindings`);
+		throw new Error(`abElement can only be used in text bindings`);
 	}
 
 	// If this part already has an instantiated element we

@@ -1,7 +1,7 @@
 <h1 align="center">@appnest/ab-test</h1>
 <p align="center">
-  <b>A/B testing made simple</b></br>
-  <sub>Never be happy with your conversion rate. Just remember that every page can be better. Go here to see a demo <a href="https://appnest-demo.firebaseapp.com/ab-test">https://appnest-demo.firebaseapp.com/ab-test</a>.<sub>
+  <b>A/B testing made incredible simple</b></br>
+  <sub>Never be happy with your conversion rate. Just remember that every page can be better. This library makes A/B testing incredible simple and works very well with web components. Go here to see a demo <a href="https://appnest-demo.firebaseapp.com/ab-test">https://appnest-demo.firebaseapp.com/ab-test</a>.<sub>
 </p>
 
 <br />
