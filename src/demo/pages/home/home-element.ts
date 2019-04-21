@@ -11,10 +11,6 @@ import { getExperiment } from "../../../lib/experiment/experiment";
 import { Tests } from "../../../lib/typings";
 import css from "./home-element.scss";
 
-/*
-	ab-funnel
- */
-
 @customElement("home-element")
 export default class HomeElement extends LitElement {
 	static styles = [unsafeCSS(css)];

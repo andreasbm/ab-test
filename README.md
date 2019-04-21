@@ -1,17 +1,84 @@
-# blocks
+<h1 align="center">@appnest/ab-test</h1>
+<p align="center">
+  <b>A/B testing made simple</b></br>
+  <sub><sub>
+</p>
+
+<br />
+
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#installation)
+
+## ➤ Installation
+
+```node
+npm i @appnest/ab-test
+```
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#usage)
+
+## ➤ Usage
+
+Use the `abTest()` function to add a test where you test one of multiple variations. The function takes an id of the test and an array of potential variations. The function optionally takes an instance of an `Experiment` class where the selected values will be added. If none is specified the function will use a global instance.
+
+```typescript
+import { abTest } from "@appnest/ab-test";
+
+const headline = abTest("header.title.text", ["A/B testing", "A/B testing made simple", "Everyone should A/B test"]);
+```
+
+Get notified by the selected test values by listening to the `update` event of the experiment. Use this event to send the information to your analytics.
+
+```typescript
+import { Tests, getExperiment } from "@appnest/ab-test";
+
+getExperiment().addEventListener("update", (e: CustomEvent<Tests>) => {
+  console.log("Update analytics tool", e.detail);
+  window.dataLayer.push(e.detail);
+});
+```
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#ab-test-web-components-using-lit-html)
+
+## ➤ A/B test web components using lit-html
+
+If you want to test different web components using [`lit-html`](https://github.com/Polymer/lit-html) you can use the `abElement()` function. This function is a lit directive and takes an id of the test and a map, mapping each tag name to its corresponding import function. Optionally it takes a map of properties that should be set on the element. If the element doesn't need an import simple pass the value null.
+
+```typescript
+import { customElement, html, LitElement } from "lit-element";
+import { abElement, abTest } from "@appnest/ab-test";
+
+@customElement("home-element")
+export default class HomeElement extends LitElement {
+  render () {
+    return html`
+      ${abElement("element", {
+        "element-one": () => import("../elements/element-one/element-one"),
+        "element-two": () => import("../elements/element-two/element-two")
+      }, {
+        headline: abTest("element.headline", ["These are the values", "Check out the values below"])
+      })}
+    `;
+  }
+}
+```
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#contributors)
+
+## ➤ Contributors
 	
-This project was built using the [create-web-config](https://github.com/andreasbm/create-web-config) CLI.
+
+| [<img alt="Andreas Mehlsen" src="https://avatars1.githubusercontent.com/u/6267397?s=460&v=4" width="100">](https://twitter.com/andreasmehlsen) | [<img alt="You?" src="https://joeschmoe.io/api/v1/random" width="100">](https://github.com/andreasbm/web-router/blob/master/CONTRIBUTING.md) |
+|:--------------------------------------------------:|:--------------------------------------------------:|
+| [Andreas Mehlsen](https://twitter.com/andreasmehlsen) | [You?](https://github.com/andreasbm/web-router/blob/master/CONTRIBUTING.md) |
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#license)
+
+## ➤ License
 	
-## Usage 
-
-* Run `npm run s` to serve your project.
-* Run `npm run b:dev` to build your project for development.
-* Run `npm run b:prod` to build your project for production.
-* Run `npm run test` to test the application.
-
-## Notes
-
-* [https://blog.hubspot.com/marketing/how-to-do-a-b-testing](https://blog.hubspot.com/marketing/how-to-do-a-b-testing)
-* [https://www.optimizely.com/optimization-glossary/multivariate-test-vs-ab-test/](https://www.optimizely.com/optimization-glossary/multivariate-test-vs-ab-test/)
-* You can test more than one variable for a single web page or email; just be sure you're testing them one at a time.
-* This is a process called multivariate testing. If you're wondering whether you should run an A/B test versus a multivariate test.
+Licensed under [MIT](https://opensource.org/licenses/MIT).
