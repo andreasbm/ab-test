@@ -1,6 +1,6 @@
 {
 	"name": "@appnest/ab-test",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "A/B testing made incredible simple",
 	"author": "Appnest",
 	"bugs": {
