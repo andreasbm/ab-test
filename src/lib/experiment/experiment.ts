@@ -131,3 +131,9 @@ export const setExperiment = (exp: IExperiment) => {
 	experiment = exp;
 };
 
+/**
+ * Returns the global experiment.
+ */
+export const getExperiment = (): IExperiment => {
+	return experiment;
+};
