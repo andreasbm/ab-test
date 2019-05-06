@@ -38,11 +38,11 @@
 	},
 	"devDependencies": {
 		"@appnest/readme": "^1.2.3",
-		"@appnest/web-config": "^0.4.17",
-		"@appnest/web-router": "^1.3.4",
+		"@appnest/web-config": "^0.4.22",
+		"@appnest/web-router": "^1.3.6",
 		"lit-element": "^2.1.0",
 		"node-typescript-compiler": "^2.0.0",
-		"weightless": "0.0.29"
+		"weightless": "0.0.33"
 	},
 	"dependencies": {
 		"lit-html": "^1.0.0"
