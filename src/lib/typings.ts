@@ -10,6 +10,8 @@ export interface IExperiment extends EventTarget {
 	getAll (): Tests;
 	remove (id: string): void;
 	removeAll (): void;
+	save(): void;
+	load(): void;
 	getVariation<T> (variations: T[]): T;
 }
 

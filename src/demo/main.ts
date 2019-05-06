@@ -14,12 +14,12 @@ declare global {
 
 const gaEvents = ["header.title.text", "header.text.simple-word", "header.text.long", "theme-color", "cta", "element", "element.headline"];
 
+// Setup the experiments
 const experiment = new Experiment();
-setExperiment(experiment);
 experiment.addEventListener("update", (e: CustomEvent<Tests>) => {
+	experiment.save();
 	debounce(() => {
 		console.log("Update analytics tool", e.detail);
-		//window.dataLayer.push(e.detail);
 		for (const [key, value] of Object.entries(e.detail)) {
 			window.ga("set", `dimension${gaEvents.indexOf(key) + 1}`, value);
 		}
@@ -27,6 +27,8 @@ experiment.addEventListener("update", (e: CustomEvent<Tests>) => {
 	}, {ms: 500, id: "commit"})
 });
 
+setExperiment(experiment);
+experiment.load();
 
 customElements.whenDefined("router-slot").then(async () => {
 	const routerSlot = document.querySelector<RouterSlot>("router-slot")!;

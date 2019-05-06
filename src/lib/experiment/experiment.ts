@@ -16,8 +16,6 @@ export class Experiment extends EventTarget implements IExperiment {
 	 */
 	constructor (protected storageKey: string = "tests") {
 		super();
-		this.addEventListener(ExperimentEvent.UPDATE, this.save.bind(this));
-		this.load();
 	}
 
 	/**
@@ -94,25 +92,28 @@ export class Experiment extends EventTarget implements IExperiment {
 	}
 
 	/**
-	 * Dispatches an update event.
-	 */
-	protected didUpdate () {
-		this.dispatchEvent(new CustomEvent(ExperimentEvent.UPDATE, {detail: this.getAll()}));
-	}
-
-	/**
 	 * Saves tests to local storage.
 	 */
-	protected save () {
+	save () {
 		localStorage.setItem(this.storageKey, JSON.stringify(this.tests));
 	}
 
 	/**
 	 * Loads tests from local storage.
 	 */
-	protected load () {
-		const currentTests = JSON.parse(localStorage.getItem(this.storageKey) || "{}");
-		this.setAll(currentTests);
+	load () {
+		const tests = localStorage.getItem(this.storageKey);
+		if (tests != null) {
+			const currentTests = JSON.parse(tests);
+			this.setAll(currentTests);
+		}
+	}
+
+	/**
+	 * Dispatches an update event.
+	 */
+	protected didUpdate () {
+		this.dispatchEvent(new CustomEvent(ExperimentEvent.UPDATE, {detail: this.getAll()}));
 	}
 }
 
@@ -120,19 +121,13 @@ export class Experiment extends EventTarget implements IExperiment {
 /**
  * Singleton pattern for the global experiment.
  */
-let _experiment: IExperiment = new Experiment();
+export let experiment: IExperiment = new Experiment();
 
 /**
  * Sets the global experiment.
- * @param experiment
+ * @param exp
  */
-export const setExperiment = (experiment: IExperiment) => {
-	_experiment = experiment;
+export const setExperiment = (exp: IExperiment) => {
+	experiment = exp;
 };
 
-/**
- * Returns the global experiment.
- */
-export const getExperiment = (): IExperiment => {
-	return _experiment;
-};

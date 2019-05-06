@@ -22,12 +22,15 @@ const headline = abTest("header.title.text", ["A/B testing", "A/B testing made s
 Get notified by the selected test values by listening to the `update` event of the experiment. Use this event to send the information to your analytics.
 
 ```typescript
-import { Tests, getExperiment } from "@appnest/ab-test";
+import { Tests, experiment } from "@appnest/ab-test";
 
-getExperiment().addEventListener("update", (e: CustomEvent<Tests>) => {
+experiment.addEventListener("update", (e: CustomEvent<Tests>) => {
+  experiment.save();
   console.log("Update analytics tool", e.detail);
-  window.dataLayer.push(e.detail);
+  gtag("set", e.detail);
 });
+
+experiment.load();
 ```
 
 ## A/B test web components using lit-html
