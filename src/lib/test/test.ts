@@ -1,21 +1,18 @@
-import { ITest, Experiments } from "../typings";
+import { ExperimentEvent, Experiments, ITest } from "../typings";
 import { randomItemFromList } from "../util/random";
 
-export enum ExperimentEvent {
-	UPDATE = "update"
-}
+const EVENT_TARGET = window;
 
 /**
  * A test is a collection of experiments.
  */
-export class Test extends EventTarget implements ITest {
+export class Test implements ITest {
 	protected experiments: Experiments = {};
 
 	/**
 	 * Hooks up the experiment.
 	 */
 	constructor (protected storageKey: string = "tests") {
-		super();
 	}
 
 	/**
@@ -110,10 +107,34 @@ export class Test extends EventTarget implements ITest {
 	}
 
 	/**
+	 * Adds event listener.
+	 * @param type
+	 * @param listener
+	 * @param options
+	 */
+	addEventListener (type: ExperimentEvent,
+	                  listener: EventListenerOrEventListenerObject,
+	                  options?: boolean | AddEventListenerOptions) {
+		EVENT_TARGET.addEventListener(type, listener, options);
+	}
+
+	/**
+	 * Removes event listener.
+	 * @param type
+	 * @param listener
+	 * @param options
+	 */
+	removeEventListener (type: ExperimentEvent,
+	                     listener: EventListenerOrEventListenerObject,
+	                     options?: boolean | EventListenerOptions) {
+		EVENT_TARGET.removeEventListener(type, listener, options);
+	}
+
+	/**
 	 * Dispatches an update event.
 	 */
 	protected didUpdate () {
-		this.dispatchEvent(new CustomEvent(ExperimentEvent.UPDATE, {detail: this.getAll()}));
+		EVENT_TARGET.dispatchEvent(new CustomEvent(ExperimentEvent.UPDATE, {detail: this.getAll()}));
 	}
 }
 
@@ -121,19 +142,19 @@ export class Test extends EventTarget implements ITest {
 /**
  * Singleton pattern for the global experiment.
  */
-export let abTest: ITest = new Test();
+export let test: ITest = new Test();
 
 /**
  * Sets the global experiment.
- * @param test
+ * @param _test
  */
-export const setTest = (test: ITest) => {
-	abTest = test;
+export const setTest = (_test: ITest) => {
+	test = _test;
 };
 
 /**
  * Returns the global experiment.
  */
 export const getTest = (): ITest => {
-	return abTest;
+	return test;
 };

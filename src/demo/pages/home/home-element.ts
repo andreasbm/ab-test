@@ -7,8 +7,8 @@ import "weightless/title";
 import { setColor } from "weightless/util/theme";
 import { experimentElement } from "../../../lib/experiment-element/experiment-element";
 import { experiment } from "../../../lib/experiment/experiment";
-import { abTest } from "../../../lib/ab-test/test";
-import { Experiments } from "../../../lib/typings";
+import { test } from "../../../lib/test/test";
+import { ExperimentEvent, Experiments } from "../../../lib/typings";
 import css from "./home-element.scss";
 
 @customElement("home-element")
@@ -19,7 +19,7 @@ export default class HomeElement extends LitElement {
 
 	private clearTests () {
 		localStorage.removeItem("tests");
-		abTest.removeAll();
+		test.removeAll();
 		this.requestUpdate().then();
 
 		this.updateAbVariables();
@@ -32,7 +32,7 @@ export default class HomeElement extends LitElement {
 		/**
 		 * Save the tests each time they are updated.
 		 */
-		abTest.addEventListener("update", (e: CustomEvent<Experiments>) => {
+		test.addEventListener(ExperimentEvent.UPDATE, (e: CustomEvent<Experiments>) => {
 			this.requestUpdate().then();
 		});
 	}
@@ -98,7 +98,7 @@ export default class HomeElement extends LitElement {
 		})}
 				
 				<wl-divider class="divider"></wl-divider>
-				${repeat(Object.entries(abTest.getAll()), (([id, value]) => html`
+				${repeat(Object.entries(test.getAll()), (([id, value]) => html`
 					<wl-text class="item"><b>${id}:</b> ${value}</wl-text>
 				`))}
 				<wl-divider class="divider"></wl-divider>

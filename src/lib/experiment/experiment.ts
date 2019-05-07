@@ -1,4 +1,4 @@
-import { getTest } from "../ab-test/test";
+import { getTest } from "../test/test";
 import { ITest } from "../typings";
 
 /**

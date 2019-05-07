@@ -1,9 +1,9 @@
 import "@appnest/web-router";
 import { RouterSlot } from "@appnest/web-router";
-import "./main.scss";
-import { setTest, Test } from "../lib/ab-test/test";
-import { Experiments } from "../lib/typings";
+import { setTest, Test } from "../lib/test/test";
+import { ExperimentEvent, Experiments } from "../lib/typings";
 import { debounce } from "../lib/util/debounce";
+import "./main.scss";
 
 declare global {
 	interface Window {
@@ -13,12 +13,12 @@ declare global {
 
 // Setup the experiments
 const test = new Test();
-test.addEventListener("update", (e: CustomEvent<Experiments>) => {
+test.addEventListener(ExperimentEvent.UPDATE, (e: CustomEvent<Experiments>) => {
 	test.save();
 	debounce(() => {
 		console.log("Update analytics tool", e.detail);
 		console.log(JSON.stringify(e.detail));
-		window.gtag("set", "dimension1", JSON.stringify(e.detail));
+		window.gtag("config", "UA-96179028-1", {dimension1: JSON.stringify(e.detail)});
 	}, {ms: 500, id: "commit"})
 });
 

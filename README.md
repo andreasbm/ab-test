@@ -66,9 +66,9 @@ test.save();
 Ultimately we want to save the selected variations each time new experiments are added to the test. To do that we listen for the `update` event on the `test` object. It's also here we want to send information about the selected values to our analytics tools.
 
 ```typescript
-import { Experiments, test } from "@appnest/ab-test";
+import { Experiments, test, ExperimentEvent } from "@appnest/ab-test";
 
-test.addEventListener("update", (e: CustomEvent<Experiments>) => {
+test.addEventListener(ExperimentEvent.UPDATE, (e: CustomEvent<Experiments>) => {
   test.save();
   console.log("TODO: Update analytics tools", e.detail);
 });
@@ -130,9 +130,9 @@ const title = experiment("header.title", ["Buy today", "Get instant access"]);
 Add the title to the correct place in the header. Next you want send the data to Google Analytics. You can do that by using the global `gtag()` function and setting a dimension. We are going to create the dimension in Google Analytics in next step, but lets assume for now its `dimension1`. Since dimensions only take primitive values we stringify the object specifying the selected variations.
 
 ```typescript
-import { Experiments, test } from "@appnest/ab-test";
+import { Experiments, test, ExperimentEvent } from "@appnest/ab-test";
 
-test.addEventListener("update", (e: CustomEvent<Experiments>) => {
+test.addEventListener(ExperimentEvent.UPDATE, (e: CustomEvent<Experiments>) => {
   test.save();
   gtag("set", "dimension1", JSON.stringify(e.detail));
 });
