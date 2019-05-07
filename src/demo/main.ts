@@ -1,7 +1,7 @@
 import "@appnest/web-router";
 import { RouterSlot } from "@appnest/web-router";
 import { setTest, Test } from "../lib/test/test";
-import { ExperimentEvent, Experiments } from "../lib/typings";
+import { TestEvent, Experiments } from "../lib/typings";
 import { debounce } from "../lib/util/debounce";
 import "./main.scss";
 
@@ -13,7 +13,7 @@ declare global {
 
 // Setup the experiments
 const test = new Test();
-test.addEventListener(ExperimentEvent.UPDATE, (e: CustomEvent<Experiments>) => {
+test.addEventListener(TestEvent.UPDATE, (e: CustomEvent<Experiments>) => {
 	test.save();
 	debounce(() => {
 		console.log("Update analytics tool", e.detail);

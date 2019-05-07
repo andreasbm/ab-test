@@ -1,4 +1,4 @@
-import { ExperimentEvent, Experiments, ITest } from "../typings";
+import { TestEvent, Experiments, ITest } from "../typings";
 import { randomItemFromList } from "../util/random";
 
 const EVENT_TARGET = window;
@@ -112,7 +112,7 @@ export class Test implements ITest {
 	 * @param listener
 	 * @param options
 	 */
-	addEventListener (type: ExperimentEvent,
+	addEventListener (type: TestEvent,
 	                  listener: EventListenerOrEventListenerObject,
 	                  options?: boolean | AddEventListenerOptions) {
 		EVENT_TARGET.addEventListener(type, listener, options);
@@ -124,7 +124,7 @@ export class Test implements ITest {
 	 * @param listener
 	 * @param options
 	 */
-	removeEventListener (type: ExperimentEvent,
+	removeEventListener (type: TestEvent,
 	                     listener: EventListenerOrEventListenerObject,
 	                     options?: boolean | EventListenerOptions) {
 		EVENT_TARGET.removeEventListener(type, listener, options);
@@ -134,7 +134,7 @@ export class Test implements ITest {
 	 * Dispatches an update event.
 	 */
 	protected didUpdate () {
-		EVENT_TARGET.dispatchEvent(new CustomEvent(ExperimentEvent.UPDATE, {detail: this.getAll()}));
+		EVENT_TARGET.dispatchEvent(new CustomEvent(TestEvent.UPDATE, {detail: this.getAll()}));
 	}
 }
 

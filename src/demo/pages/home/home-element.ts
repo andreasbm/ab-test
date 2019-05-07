@@ -8,7 +8,7 @@ import { setColor } from "weightless/util/theme";
 import { experimentElement } from "../../../lib/experiment-element/experiment-element";
 import { experiment } from "../../../lib/experiment/experiment";
 import { test } from "../../../lib/test/test";
-import { ExperimentEvent, Experiments } from "../../../lib/typings";
+import { TestEvent, Experiments } from "../../../lib/typings";
 import css from "./home-element.scss";
 
 @customElement("home-element")
@@ -32,7 +32,7 @@ export default class HomeElement extends LitElement {
 		/**
 		 * Save the tests each time they are updated.
 		 */
-		test.addEventListener(ExperimentEvent.UPDATE, (e: CustomEvent<Experiments>) => {
+		test.addEventListener(TestEvent.UPDATE, (e: CustomEvent<Experiments>) => {
 			this.requestUpdate().then();
 		});
 	}

@@ -1,7 +1,7 @@
 export type Experiments = {[id: string]: unknown};
 export type Properties = {[key: string]: unknown;};
 export type ElementImporter = (() => Promise<unknown>);
-export enum ExperimentEvent {
+export enum TestEvent {
 	UPDATE = "update"
 }
 
@@ -16,8 +16,8 @@ export interface ITest {
 	save(): void;
 	load(): void;
 	getVariation<T> (variations: T[]): T;
-	addEventListener(type: ExperimentEvent, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-	removeEventListener(type: ExperimentEvent, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+	addEventListener(type: TestEvent, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+	removeEventListener(type: TestEvent, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
 
 }
 
