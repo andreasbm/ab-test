@@ -127,14 +127,16 @@ import { experiment } from "@appnest/ab-test";
 const title = experiment("header.title", ["Buy today", "Get instant access"]);
 ```
 
-Add the title to the correct place in the header. Next you want send the data to Google Analytics. You can do that by using the global `gtag()` function and setting a dimension. We are going to create the dimension in Google Analytics in next step, but lets assume for now its `dimension1`. Since dimensions only take primitive values we stringify the object specifying the selected variations.
+Add the title to the correct place in the header. Next you want send the data to Google Analytics. You can do that by using the global `gtag()` function and setting a dimension. Read more about the approach [here](https://developers.google.com/analytics/devguides/collection/gtagjs/setting-values). We are going to create the dimension in Google Analytics in next step, but lets assume for now its `dimension1`. Since dimensions only take primitive values we stringify the object specifying the selected variations.
 
 ```typescript
 import { Experiments, test, ExperimentEvent } from "@appnest/ab-test";
 
 test.addEventListener(ExperimentEvent.UPDATE, (e: CustomEvent<Experiments>) => {
   test.save();
-  gtag("set", "dimension1", JSON.stringify(e.detail));
+  gtag("config", "UA-XXXXXXXX-X", {
+    "dimension1": JSON.stringify(e.detail)
+  });
 });
 
 test.load();
