@@ -142,15 +142,25 @@ test.addEventListener(ExperimentEvent.UPDATE, (e: CustomEvent<Experiments>) => {
 test.load();
 ```
 
-We now go to `Google Analytics → Admin → Property → Custom Definitions → Custom Dimensions` and create a custom dimension called `AB Test`. Remember that you cannot delete custom dimensions after they have been created and that you can have a maximum of 20 in each view. Therefore you can consider creating a new view for this purpose.
+We now go to `Google Analytics → Admin → Property → Custom Definitions → Custom Dimensions` and create a custom dimension called `AB Test`. Set the scope to `session`. Remember that you cannot delete custom dimensions after they have been created and that you can have a maximum of 20 in each view. Therefore you can consider creating a new view for this purpose.
+
+<img src="https://github.com/andreasbm/ab-test/blob/master/assets/dimension.jpg?raw=true" alt="Dimension" width="500"/>
 
 Next we go to `Google Analytics → Admin → View → Segments` and create two segments. We call the first segment for `AB Header Title 1` and the other segment for `AB Header Title 2`. In the first segment we go to the tab `Conditions` and add a filter that includes the `AB Test` dimension we created before if the dimension contains `"header.title.text":"Buy today"`. We do the same for the other segment but only includes the dimension if it contains `"header.title.text":"Get instant access"`.
 
+<img src="https://github.com/andreasbm/ab-test/blob/master/assets/segment.jpg?raw=true" alt="Segment" width="500"/>
+
 Then we go to `Google Analytics → Admin → View → Goals` and create some goals that can capture conversions. That could for example be sign ups to the newsletter. Make sure to track this from your app since we need the data to figure out which variation is doing best.
+
+<img src="https://github.com/andreasbm/ab-test/blob/master/assets/goal.jpg?raw=true" alt="Goal" width="500"/>
 
 Now we need to set up a view so we can figure out what variations are doing the best. Go to `Google Analytics → Customization → Custom Reports` and create a new report. Select the conversion rate of the goals you are measuring as your `Metric Groups`. The `Dimension Drilldowns` should be the `AB Test` dimension you created.
 
+<img src="https://github.com/andreasbm/ab-test/blob/master/assets/report.jpg?raw=true" alt="Report" width="500"/>
+
 Go to the report you just created and select the two segments `AB Header Title 1` and `AB Header Title 2`. Click save and you are done! You will now be able to track which headline is doing best. Wait a couple of weeks and select the one that are doing best.
+
+<img src="https://github.com/andreasbm/ab-test/blob/master/assets/view.jpg?raw=true" alt="View" width="500"/>
 
 You should always try to only have one AB test going on at a given time.
 
