@@ -108,7 +108,7 @@ test.addEventListener(ExperimentEvent.UPDATE, (e: CustomEvent<Experiments>) => {
 test.load();
 ```
 
-We now go to `Google Analytics → Admin → Property → Custom Definitions → Custom Dimensions` and create a custom dimension called `AB Test`. Remember that you cannot delete custom dimensions after they have been created and that you can have a maximum of 20 in each view. Therefore you can consider creating a new view for this purpose.
+We now go to `Google Analytics → Admin → Property → Custom Definitions → Custom Dimensions` and create a custom dimension called `AB Test`. Set the scope to `session`. Remember that you cannot delete custom dimensions after they have been created and that you can have a maximum of 20 in each view. Therefore you can consider creating a new view for this purpose.
 
 Next we go to `Google Analytics → Admin → View → Segments` and create two segments. We call the first segment for `AB Header Title 1` and the other segment for `AB Header Title 2`. In the first segment we go to the tab `Conditions` and add a filter that includes the `AB Test` dimension we created before if the dimension contains `"header.title.text":"Buy today"`. We do the same for the other segment but only includes the dimension if it contains `"header.title.text":"Get instant access"`.
 
