@@ -14,9 +14,9 @@ export const experimentElement = directive((
 	properties: Properties = {},
 	test: ITest = getTest()) => async (part: Part) => {
 
-	// Make sure the part is used within a text binding context.
+	// Make sure the part is a node part.
 	if (!(part instanceof NodePart)) {
-		throw new Error(`experimentElement can only be used in text bindings`);
+		throw new Error(`experimentElement can only be used with node parts.`);
 	}
 
 	// If this part already has an instantiated element we
